@@ -26,6 +26,7 @@ interface InputProps {
   leftIconStyle?: any;
   rightIconStyle?: any;
   onChangeText?: (value: string) => any;
+  onBlur?: () => void;
   onPressLeftIcon?: () => void;
   onPressRightIcon?: () => void;
 }
@@ -45,6 +46,7 @@ export const Input: FC<InputProps> = ({
   leftIconStyle,
   rightIconStyle,
   onChangeText,
+  onBlur,
   onPressLeftIcon,
   onPressRightIcon,
 }) => {
@@ -66,12 +68,13 @@ export const Input: FC<InputProps> = ({
         </TouchableOpacity>
       )}
       <TextInput
-        onChangeText={onChangeText}
         value={text}
         placeholder={placeholder}
         style={[styles.input, inputStyle && inputStyle]}
         placeholderTextColor={placeholderTextColor}
         secureTextEntry={secureTextEntry}
+        onChangeText={onChangeText}
+        onBlur={onBlur}
       />
       {rightIcon && (
         <TouchableOpacity
@@ -79,7 +82,7 @@ export const Input: FC<InputProps> = ({
           onPress={onPressRightIcon}>
           <Image
             source={rightIcon}
-            style={[styles.image, leftIconStyle && rightIconStyle]}
+            style={[styles.image, rightIconStyle && rightIconStyle]}
           />
         </TouchableOpacity>
       )}
