@@ -79,7 +79,7 @@ export const Input: FC<InputProps> = ({
           onPress={onPressRightIcon}>
           <Image
             source={rightIcon}
-            style={[styles.image, leftIconStyle && rightIconStyle]}
+            style={[styles.image, rightIconStyle && rightIconStyle]}
           />
         </TouchableOpacity>
       )}

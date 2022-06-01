@@ -2,9 +2,12 @@ import React, {FC, useCallback, useState} from 'react';
 import {
   Animated,
   Easing,
+  Image,
+  ImageSourcePropType,
   StyleSheet,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
 import {COLORS} from '../../constants/colors';
 import {dw} from '../../utils/dimensions';
@@ -14,13 +17,29 @@ type ToogleProps = {
   isActive: boolean;
   startState?: any;
   endState?: any;
+  leftIcon?: ImageSourcePropType;
+  rightIcon?: ImageSourcePropType;
+  leftIconStyle?: any;
+  rightIconStyle?: any;
+  containerToogleStyle?: ViewStyle;
+  containerLeftIcon?: ViewStyle;
+  containerRightIcon?: ViewStyle;
+  containerStyleButton?: ViewStyle;
   setActive: (value: boolean) => void;
 };
 
 export const Toogle: FC<ToogleProps> = ({
   isActive,
   startState = {x: 6, y: dw(-25)},
-  endState = {x: dw(35), y: dw(-25)},
+  endState = {x: dw(45), y: dw(-25)},
+  leftIcon,
+  rightIcon,
+  leftIconStyle,
+  rightIconStyle,
+  containerToogleStyle,
+  containerLeftIcon,
+  containerRightIcon,
+  containerStyleButton,
   setActive,
 }) => {
   const onPress = useCallback(() => {
@@ -43,11 +62,48 @@ export const Toogle: FC<ToogleProps> = ({
         style={[
           styles.containerToogle,
           isActive && styles.containerToogleActive,
+          containerToogleStyle && containerToogleStyle,
         ]}
       />
       <Animated.View style={animatedValue.getLayout()}>
-        <RadioButton isActive={isActive} onPress={onPress} />
+        <RadioButton
+          isActive={isActive}
+          onPress={onPress}
+          containerStyleButton={containerStyleButton && containerStyleButton}
+        />
       </Animated.View>
+      {leftIcon && (
+        <View
+          style={[
+            styles.containerLeftIcon,
+            containerLeftIcon && containerLeftIcon,
+          ]}>
+          <Image
+            source={leftIcon}
+            style={[
+              styles.image,
+              !isActive && styles.imageLeft,
+              leftIconStyle && rightIconStyle,
+            ]}
+          />
+        </View>
+      )}
+      {rightIcon && (
+        <View
+          style={[
+            styles.containerRightIcon,
+            containerRightIcon && containerRightIcon,
+          ]}>
+          <Image
+            source={rightIcon}
+            style={[
+              styles.image,
+              isActive && styles.imageRight,
+              rightIconStyle && rightIconStyle,
+            ]}
+          />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -58,11 +114,29 @@ const styles = StyleSheet.create({
   },
   containerToogle: {
     borderRadius: dw(50),
-    width: dw(60),
+    width: dw(70),
     height: dw(30),
-    backgroundColor: COLORS.GHOST,
+    backgroundColor: COLORS.ABBEY,
   },
   containerToogleActive: {
-    backgroundColor: COLORS.RED,
+    backgroundColor: COLORS.ABBEY,
+  },
+  containerLeftIcon: {
+    bottom: dw(49),
+    left: dw(5),
+  },
+  containerRightIcon: {
+    bottom: dw(77),
+    left: dw(37),
+  },
+  image: {
+    resizeMode: 'contain',
+    backgroundColor: COLORS.TRANSPARENT,
+  },
+  imageLeft: {
+    tintColor: COLORS.TRANSPARENT,
+  },
+  imageRight: {
+    tintColor: COLORS.TRANSPARENT,
   },
 });

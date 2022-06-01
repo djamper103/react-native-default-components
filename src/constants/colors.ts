@@ -14,4 +14,5 @@ export const COLORS = {
   SAN_MARINO: '#3F51B5',
   APPLE: '#60B53F',
   RED: '#FF0000',
+  ABBEY: '#4C4F56',
 };

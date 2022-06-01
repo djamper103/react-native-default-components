@@ -7,18 +7,26 @@ import {ButtonContainer} from '../button';
 interface ButtonContainerProps {
   isActive?: boolean;
   containerStyle?: ViewStyle;
+  containerStyleButton?: ViewStyle;
   onPress?: () => void;
 }
 
 export const RadioButton: FC<ButtonContainerProps> = ({
   isActive,
   containerStyle,
+  containerStyleButton,
   onPress,
 }) => {
   return (
     <View style={containerStyle && containerStyle}>
       <ButtonContainer
-        buttonStyle={isActive ? styles.buttonActive : styles.button}
+        buttonStyle={
+          containerStyleButton
+            ? containerStyleButton
+            : isActive
+            ? styles.buttonActive
+            : styles.button
+        }
         onPress={onPress}
       />
     </View>
@@ -30,9 +38,9 @@ const styles = StyleSheet.create({
     width: dw(20),
     height: dw(20),
     borderRadius: dw(20),
-    borderWidth: dw(6),
+    borderWidth: dw(5),
     borderColor: COLORS.WHITE,
-    backgroundColor: COLORS.GHOST,
+    backgroundColor: COLORS.TRANSPARENT,
     paddingVertical: 0,
   },
   buttonActive: {
